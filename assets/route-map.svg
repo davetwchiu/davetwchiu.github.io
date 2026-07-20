@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-labelledby="title desc">
+<title id="title">大阪為中心的關西旅程路線</title><desc id="desc">大阪連接奈良、堺、神戶和箕面的抽象地圖。</desc>
+<rect width="900" height="620" fill="#18324a"/>
+<g fill="none" stroke-linecap="round">
+  <path d="M430 318 C560 280 650 245 770 198" stroke="#d4ad60" stroke-width="8"/>
+  <path d="M430 318 C540 360 650 410 760 470" stroke="#8ab3a6" stroke-width="8"/>
+  <path d="M430 318 C330 380 245 455 130 505" stroke="#d17760" stroke-width="8"/>
+  <path d="M430 318 C365 218 310 150 260 78" stroke="#b7c7d1" stroke-width="8"/>
+</g>
+<g font-family="system-ui,sans-serif" fill="#fff">
+  <circle cx="430" cy="318" r="50" fill="#f4f0e7" stroke="#d4ad60" stroke-width="8"/><text x="430" y="325" text-anchor="middle" fill="#18324a" font-size="24" font-weight="700">大阪</text>
+  <circle cx="770" cy="198" r="20" fill="#d4ad60"/><text x="790" y="174" font-size="22">奈良</text><text x="790" y="202" fill="#c4d0d7" font-size="14">27 AUG</text>
+  <circle cx="760" cy="470" r="20" fill="#8ab3a6"/><text x="785" y="464" font-size="22">堺</text><text x="785" y="490" fill="#c4d0d7" font-size="14">28 AUG</text>
+  <circle cx="130" cy="505" r="20" fill="#d17760"/><text x="65" y="475" font-size="22">神戶</text><text x="58" y="500" fill="#c4d0d7" font-size="14">30 AUG</text>
+  <circle cx="260" cy="78" r="20" fill="#b7c7d1"/><text x="280" y="72" font-size="22">箕面</text><text x="280" y="98" fill="#c4d0d7" font-size="14">01 SEP</text>
+</g>
+<g fill="#c4d0d7" font-family="ui-monospace,monospace" font-size="13"><text x="38" y="52">OSAKA BASE / LATE SUMMER 2026</text><text x="640" y="575">NOT TO SCALE</text></g>
+</svg>
