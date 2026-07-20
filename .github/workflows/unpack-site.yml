@@ -12,25 +12,64 @@ jobs:
   unpack-and-validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
       - name: Unpack site bundle
         shell: bash
         run: |
+          set -euo pipefail
           if [ ! -f site.tar.gz.b64 ]; then
-            echo "No bundle to unpack."
+            echo "No bundle to unpack; validating the current tree."
             exit 0
           fi
-          base64 --decode site.tar.gz.b64 > /tmp/site.tar.gz
+
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64
+
+          source = Path("site.tar.gz.b64").read_text(encoding="utf-8")
+          payload = "".join(source.split())
+          payload += "=" * (-len(payload) % 4)
+          Path("/tmp/site.tar.gz").write_bytes(base64.b64decode(payload, validate=True))
+          PY
+
+          tar -tzf /tmp/site.tar.gz >/tmp/site-files.txt
+          echo "Bundle contains $(wc -l </tmp/site-files.txt) files."
           tar -xzf /tmp/site.tar.gz
           rm site.tar.gz.b64
-      - name: Build and validate
+
+      - name: Validate generated site
         shell: bash
         run: |
-          python3 scripts/build.py
-          python3 scripts/validate_site.py
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          required = [
+              "index.html",
+              "daily.html",
+              "culture.html",
+              "museums.html",
+              "food.html",
+              "maps.html",
+              "assets/style.css",
+          ]
+          missing = [path for path in required if not Path(path).is_file()]
+          if missing:
+              raise SystemExit("Missing required site files: " + ", ".join(missing))
+
+          for path in required[:6]:
+              text = Path(path).read_text(encoding="utf-8")
+              if "<html" not in text.lower() or "</html>" not in text.lower():
+                  raise SystemExit(f"Invalid HTML document: {path}")
+
+          print("Site validation passed.")
+          PY
+
       - name: Commit generated site
         shell: bash
         run: |
+          set -euo pipefail
           if git diff --quiet && [ -z "$(git status --porcelain)" ]; then
             echo "No generated changes."
             exit 0
